@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Assault Rifle",
+        "description": "Standard issue assault rifle",
+        "image": "./assault_rifle.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Tactical Vest",
+        "description": "Bulletproof tactical vest",
+        "image": "/tactical_vest.webp"
+    },
+    {
+        "id": 3,
+        "name": "Night Vision Goggles",
+        "description": "High-quality night vision goggles",
+        "image": "night_vision_goggles.webp"
+    },
+    {
+        "id": 4,
+        "name": "Combat Helmet",
+        "description": "Kevlar combat helmet",
+        "image": "combat_helmet.webp"
+    }
+]
