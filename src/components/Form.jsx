@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import productsData from '../../public/productsMilitary.json';
-import { jsPDF } from 'jspdf';
 import List from './List';
-
 
 function Form() {
     const [formData, setFormData] = useState({
@@ -18,8 +16,9 @@ function Form() {
 
     const [showModal, setShowModal] = useState(false);
     const [submissions, setSubmissions] = useState([]);
-
     const [errors, setErrors] = useState({});
+
+    const popoverRef = useRef(null); // Ref for popover
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -46,8 +45,10 @@ function Form() {
         if (!formData.country) newErrors.country = 'Country is required';
 
         setErrors(newErrors);
+
         return Object.keys(newErrors).length === 0;
     };
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -71,6 +72,13 @@ function Form() {
         setErrors({});
     };
 
+    useEffect(() => {
+        // Clean up popovers on component unmount or when errors change
+        return () => {
+            const popovers = popoverRef.current.querySelectorAll('.popover');
+            popovers.forEach(popover => popover.remove());
+        };
+    }, [errors]);
 
     return (
         <div className="main-container" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-left' }}>
@@ -78,9 +86,9 @@ function Form() {
 
                 <div className="content__container">
                     <h1 className="heading__1">Military Manufacturers and Suppliers</h1>
-                    <form onSubmit={handleSubmit} className="form mt-3" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <form onSubmit={handleSubmit} className="form mt-3" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }} ref={popoverRef}>
 
-                        {/* Form inputs that handles the form data and the product selection */}
+                        {/* Form inputs that handle form data and product selection */}
                         <div className="form-group mt-3">
                             <label>Name</label>
                             <input
@@ -88,9 +96,10 @@ function Form() {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                                data-bs-toggle="popover"
+                                data-bs-content={errors.name || ''}
                             />
-                            {errors.name && <div className="error">{errors.name}</div>}
                         </div>
 
                         <div className="form-group">
@@ -100,9 +109,10 @@ function Form() {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                                data-bs-toggle="popover"
+                                data-bs-content={errors.email || ''}
                             />
-                            {errors.email && <div className="error">{errors.email}</div>}
                         </div>
 
                         <div className="form-group">
@@ -112,9 +122,10 @@ function Form() {
                                 name="phone"
                                 value={formData.phone}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                                data-bs-toggle="popover"
+                                data-bs-content={errors.phone || ''}
                             />
-                            {errors.phone && <div className="error">{errors.phone}</div>}
                         </div>
 
                         <div className="form-group">
@@ -124,9 +135,10 @@ function Form() {
                                 name="company"
                                 value={formData.company}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className={`form-control ${errors.company ? 'is-invalid' : ''}`}
+                                data-bs-toggle="popover"
+                                data-bs-content={errors.company || ''}
                             />
-                            {errors.company && <div className="error">{errors.company}</div>}
                         </div>
 
                         <div className="form-group">
@@ -136,9 +148,10 @@ function Form() {
                                 name="address"
                                 value={formData.address}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+                                data-bs-toggle="popover"
+                                data-bs-content={errors.address || ''}
                             />
-                            {errors.address && <div className="error">{errors.address}</div>}
                         </div>
 
                         <div className="form-group">
@@ -148,11 +161,13 @@ function Form() {
                                 name="country"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className={`form-control ${errors.country ? 'is-invalid' : ''}`}
+                                data-bs-toggle="popover"
+                                data-bs-content={errors.country || ''}
                             />
-                            {errors.country && <div className="error">{errors.country}</div>}
                         </div>
 
+                        {/* Requested Products */}
                         <div className="form-group">
                             <label>Requested Products</label>
                             <button type="button" className="btn btn-primary" onClick={() => setShowModal(true)} style={{ marginRight: '1rem' }}>
@@ -160,16 +175,19 @@ function Form() {
                             </button>
                         </div>
 
+                        {/* Additional Information */}
                         <div className="form-group">
                             <label>Additional Information:</label>
                             <textarea
                                 name="additionalInfo"
                                 value={formData.additionalInfo}
                                 onChange={handleInputChange}
-                                style={{ marginRight: '1rem' }}
+                                className="form-control"
+                                rows="3"
                             />
                         </div>
 
+                        {/* Form actions */}
                         <div className="form-actions" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                             <button type="submit" className="btn btn-primary" style={{ marginRight: '1rem' }}>Submit</button>
                             <button type="button" className="btn btn-secondary" onClick={handleReset} style={{ marginRight: '1rem' }}>Reset</button>
@@ -177,7 +195,7 @@ function Form() {
                     </form>
                 </div>
 
-                {/* Modal for product selection that display the product from json, user can click it */}
+                {/* Modal for product selection */}
                 {showModal && (
                     <div className="modal fade show" tabIndex="-1" style={{ display: 'block' }}>
                         <div className="modal-dialog">
@@ -202,13 +220,13 @@ function Form() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
 
+                {/* Selected Products */}
                 <div className="selected-products mt-5">
                     <h2>Selected Products</h2>
                     <div className="card-grid">
@@ -222,11 +240,11 @@ function Form() {
                         ))}
                     </div>
                 </div>
+
+                {/* List Component */}
                 <List submissions={submissions} setSubmissions={setSubmissions} />
             </div>
-
         </div>
-
     );
 }
 

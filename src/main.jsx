@@ -10,13 +10,19 @@ import HomePage from './pages/HomePage.jsx'
 import Trade from './pages/Trade.jsx'
 import Login from './pages/Login.jsx'
 
+
+
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />,
+  },
   {
     path: '/',
     element: <App />,
     children: [
       {
-        path: '/',
+        path: '/homepage',
         element: <HomePage />,
       },
       {
@@ -25,10 +31,7 @@ const router = createBrowserRouter([
       },
     ]
   },
-  {
-    path: '/login',
-    element: <Login />,
-  },
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -7,7 +7,7 @@ function NavBar() {
             <nav className="navbar navbar-expand-lg fixed-top">
                 <div className="container-fluid">
                     <Link className="navbar-brand me-auto" to="/">
-                        Form List Project
+                        Zeiv Private Arm Ltd.
                     </Link>
                     <button
                         className="navbar-toggler pe-8"
@@ -34,7 +34,7 @@ function NavBar() {
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-center flex-grow-1 pe-3">
                                 <li className="nav-item">
-                                    <Link className="nav-link mx-lg-2 active" aria-current="page" to="/">
+                                    <Link className="nav-link mx-lg-2 active" aria-current="page" to="/homepage">
                                         Home
                                     </Link>
                                 </li>
@@ -46,7 +46,7 @@ function NavBar() {
                             </ul>
                         </div>
                     </div>
-                    <Link to="/login" className="login-button">
+                    <Link to="/" className="login-button">
                         Login
                     </Link>
                 </div>
