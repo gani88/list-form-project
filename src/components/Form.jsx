@@ -72,20 +72,12 @@ function Form() {
         setErrors({});
     };
 
-    useEffect(() => {
-        // Clean up popovers on component unmount or when errors change
-        return () => {
-            const popovers = popoverRef.current.querySelectorAll('.popover');
-            popovers.forEach(popover => popover.remove());
-        };
-    }, [errors]);
-
     return (
         <div className="main-container" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-left' }}>
             <div className="container" style={{ width: '100%' }}>
 
                 <div className="content__container">
-                    <h1 className="heading__1">Military Manufacturers and Suppliers</h1>
+                    <h1 className="heading__1" style={{ textAlign: 'center', fontSize: '30px' }}>Military Manufacturers and Suppliers</h1>
                     <form onSubmit={handleSubmit} className="form mt-3" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }} ref={popoverRef}>
 
                         {/* Form inputs that handle form data and product selection */}
@@ -167,7 +159,7 @@ function Form() {
                             />
                         </div>
 
-                        {/* Requested Products */}
+                        {/* Requested Products (It has Selector in Modal)*/}
                         <div className="form-group">
                             <label>Requested Products</label>
                             <button type="button" className="btn btn-primary" onClick={() => setShowModal(true)} style={{ marginRight: '1rem' }}>

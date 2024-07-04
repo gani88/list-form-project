@@ -2,26 +2,30 @@ import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
 
 function List({ submissions, setSubmissions }) {
-    const [selectedSubmission, setSelectedSubmission] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editData, setEditData] = useState(null);
+    const [selectedSubmission, setSelectedSubmission] = useState(null);         // This state will keep track of the selected submission
+    const [isEditing, setIsEditing] = useState(false);                          // This state will keep track of whether the user is editing a submission
+    const [editData, setEditData] = useState(null);                             // State to hold the data of the submission being edited
 
+    // Handling functions for deletion
     const handleDelete = (index) => {
         const updatedSubmissions = submissions.filter((_, i) => i !== index);
         setSubmissions(updatedSubmissions);
         if (selectedSubmission === index) setSelectedSubmission(null);
     };
 
+    // Handling functions for editing
     const handleEdit = (index) => {
         setEditData({ ...submissions[index], index });
         setIsEditing(true);
     };
 
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setEditData({ ...editData, [name]: value });
     };
 
+    // Handling functions for saving edits
     const handleSaveEdit = () => {
         const updatedSubmissions = submissions.map((submission, index) =>
             index === editData.index ? editData : submission
@@ -30,6 +34,7 @@ function List({ submissions, setSubmissions }) {
         setIsEditing(false);
     };
 
+    // Function to download the submission to pdf
     const handleDownloadPDF = (submission) => {
         const doc = new jsPDF();
         doc.text('Submission Details', 10, 10);
@@ -52,7 +57,6 @@ function List({ submissions, setSubmissions }) {
                 {submissions?.map((submission, index) => (
                     <div className="custom-card" key={index}>
                         <div className="custom-card-body">
-                            {/* Assuming `productImage` is a property in submission.requestedProducts */}
                             {submission.requestedProducts.map((product, productIndex) => (
                                 <React.Fragment key={productIndex}>
                                     <img src={product.image} alt={product.name} style={{ width: '50%' }} className="rounded"/>

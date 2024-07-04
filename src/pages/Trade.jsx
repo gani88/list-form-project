@@ -10,10 +10,6 @@ function Trade() {
             <div className='page__content mb-5'>
                 <Form />
             </div>
-
-            {/* <div className='page__content mb-5'>
-                <List />
-            </div> */}
             
         </div>
     );
