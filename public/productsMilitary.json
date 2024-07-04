@@ -22,5 +22,11 @@
         "name": "Combat Helmet",
         "description": "Kevlar combat helmet",
         "image": "combat_helmet.webp"
+    },
+    {
+        "id": 5,
+        "name": "Armoured Car",
+        "description": "World War II Armoured Car",
+        "image": "armoured_car.jpg"
     }
 ]

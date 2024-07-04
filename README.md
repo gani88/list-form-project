@@ -1,8 +1,9 @@
-# Data : JSON Data with product of military
+# To Do List in This Project
+
+## Data : JSON Data with product of military
 create json data with product of military
 
-# Form Component
-
+## Form Component
 Military Manufacturers and Suppliers
 
 Form to request weapons and supplies:
@@ -19,7 +20,7 @@ Form to request weapons and supplies:
 - Will have submit button, reset button, and can download as a pdf
 
 
-# List Component
+## List Component
 - After the customer fill in the form, it will be stored in list page (the location of the list is in below Form)
 - The list will be in shape of card and have information in top of the card and it can be clicked to show the more information like : name, email, phone, company, address, country, requested products, additional information, picture of products.
 - Also customer can edit the information and delete it.
